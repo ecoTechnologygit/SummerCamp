@@ -4,17 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Favourites</title>
-    <style>
-        .centered-section {
-            text-align: center;
-            margin: 0 auto;
-            max-width: 600px;
-        }
-        .centered-section ul {
-            display: inline-block;
-            text-align: left;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -24,15 +14,15 @@
         <h2>CMSC335 Favourite Restaurants</h2>
         
         <% if (typeof error !== 'undefined' && error) { %>
-            <div style="color: red; margin: 20px 0;">
+            <div class="error-message">
                 <p><strong>Error:</strong> <%= error %></p>
             </div>
         <% } %>
         
         <% if (typeof favourites !== 'undefined' && favourites && favourites.length > 0) { %>
-            <ul style="list-style-type: none; padding: 0;">
+            <ul class="item-list">
                 <% favourites.forEach(restaurant => { %>
-                    <li style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; text-align: left;">
+                    <li class="list-item">
                         <h3><%= restaurant.name %></h3>
                         <p><strong>Address:</strong> <%= restaurant.vicinity %></p>
                         <p><strong>Rating:</strong> <%= restaurant.rating ? restaurant.rating + ' / 5' : 'Not rated' %></p>
@@ -45,7 +35,7 @@
             <p>You can add restaurants to your favourites from the search results page.</p>
         <% } %>
         
-        <div style="margin-top: 20px;">
+        <div class="mt-20">
             <a href="/search">Search for Restaurants</a> | <a href="/">Back to Home</a>
         </div>
     </div>

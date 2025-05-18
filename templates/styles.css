@@ -1,0 +1,72 @@
+.centered-section {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.centered-section ul {
+    display: inline-block;
+    text-align: left;
+}
+
+/* Form elements */
+.form-input {
+    width: 300px;
+    padding: 5px;
+}
+
+.form-input-number {
+    width: 100px;
+    padding: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn {
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-small {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.item-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    margin: 20px 0;
+}
+
+.search-results {
+    margin-top: 20px;
+} 
