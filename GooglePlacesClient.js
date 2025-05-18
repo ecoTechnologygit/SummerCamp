@@ -3,7 +3,7 @@ require('dotenv').config();
 
 class GooglePlacesClient {
   constructor() {
-    this.apiKey = "AIzaSyCDLjtN9hRTrk92-gs6Rbbzpp6XkXlTIf8";
+    this.apiKey = AIzaSyCDLjtN9hRTrk92-gs6Rbbzpp6XkXlTIf8;
     this.placesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
     this.geocodeUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
   }
