@@ -3,8 +3,8 @@ require('dotenv').config();
 
 class GooglePlacesClient {
   constructor() {
-    this.apiKey = AIzaSyCDLjtN9hRTrk92-gs6Rbbzpp6XkXlTIf8;
-    this.placesUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
+    this.apiKey = process.env.GOOGLE_API_KEY;
+    this.placesUrl = 'https://places.googleapis.com/v1/places:searchNearby';
     this.geocodeUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
   }
   async addressToCoordinates(address) {
@@ -30,19 +30,38 @@ class GooglePlacesClient {
 
   async findNearbyRestaurants(location, radius = 1000) {
     try {
-      const params = {
-        key: this.apiKey,
-        location: location,
-        radius: radius,
-        type: 'restaurant'
+      const [lat, lng] = location.split(',').map(coord => parseFloat(coord));
+      
+      const requestBody = {
+        includedTypes: ["restaurant"],
+        maxResultCount: 20,
+        locationRestriction: {
+          circle: {
+            center: {
+              latitude: lat,
+              longitude: lng
+            },
+            radius: radius
+          }
+        }
       };
 
-      const response = await axios.get(this.placesUrl, { params });
+      const response = await axios.post(this.placesUrl, requestBody, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': this.apiKey,
+          'X-Goog-FieldMask': 'places.displayName,places.formattedAddress,places.rating'
+        }
+      });
       
-      if (response.data.status === 'OK' || response.data.status === 'ZERO_RESULTS') {
-        return response.data.results;
+      if (response.data && response.data.places) {
+        return response.data.places.map(place => ({
+          name: place.displayName?.text || 'Unknown',
+          vicinity: place.formattedAddress || 'No address',
+          rating: place.rating || 0
+        }));
       } else {
-        throw new Error(`Google Places API error: ${response.data.status} - ${response.data.error_message || 'Unknown error'}`);
+        return [];
       }
     } catch (error) {
       console.error('Error finding nearby restaurants:', error.message);

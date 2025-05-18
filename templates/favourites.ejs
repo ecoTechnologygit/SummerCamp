@@ -21,9 +21,33 @@
     <h1>Your Favourite Restaurants</h1>
 
     <div class="centered-section">
-        <h2>Favourites</h2>
-        <p>This is the favourites page.</p>
-        <a href="/">Back to Home</a>
+        <h2>Your Favourite Restaurants</h2>
+        
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div style="color: red; margin: 20px 0;">
+                <p><strong>Error:</strong> <%= error %></p>
+            </div>
+        <% } %>
+        
+        <% if (typeof favourites !== 'undefined' && favourites && favourites.length > 0) { %>
+            <ul style="list-style-type: none; padding: 0;">
+                <% favourites.forEach(restaurant => { %>
+                    <li style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; text-align: left;">
+                        <h3><%= restaurant.name %></h3>
+                        <p><strong>Address:</strong> <%= restaurant.vicinity %></p>
+                        <p><strong>Rating:</strong> <%= restaurant.rating ? restaurant.rating + ' / 5' : 'Not rated' %></p>
+                        <p><strong>Added on:</strong> <%= restaurant.dateAdded ? new Date(restaurant.dateAdded).toLocaleDateString() : 'Unknown' %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>You haven't added any favourite restaurants yet.</p>
+            <p>You can add restaurants to your favourites from the search results page.</p>
+        <% } %>
+        
+        <div style="margin-top: 20px;">
+            <a href="/search">Search for Restaurants</a> | <a href="/">Back to Home</a>
+        </div>
     </div>
     
     <hr>

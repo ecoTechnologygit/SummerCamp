@@ -14,59 +14,31 @@ const client = new MongoClient(uri, {
 
 
 const dbName = process.env.MONGO_DB_NAME;
-const collectionName = process.env.MONGO_COLLECTION;
+
+const favouritesCollection = 'favourites';
 
 
-async function connect() {
-  try {
-    await client.connect();
-    return true;
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error);
-    return false;
-  }
+
+async function addFavourite(restaurantData) {
+  const database = client.db(dbName);
+  const collection = database.collection(favouritesCollection);
+  const result = await collection.insertOne(restaurantData);
+  return result;
 }
 
-async function addApplication(applicationData) {
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
-    const result = await collection.insertOne(applicationData);
-    return result;
-  }
-
-async function getAllApplications() {
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
-    const applications = await collection.find({}).toArray();
-    return applications;
-  }
-
-
-async function getApplicationsByGPA(minGPA) {
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
-    const applications = await collection.find({ gpa: { $gte: parseFloat(minGPA) } }).toArray();
-    return applications;
-  }
-
-
-async function removeAllApplications() {
-    const database = client.db(dbName);
-    const collection = database.collection(collectionName);
-    const result = await collection.deleteMany({});
-    return result;
+async function getAllFavourites() {
+  const database = client.db(dbName);
+  const collection = database.collection(favouritesCollection);
+  const favourites = await collection.find({}).toArray();
+  return favourites;
 }
-
 
 async function close() {
     await client.close();
 }
 
 module.exports = {
-  connect,
-  addApplication,
-  getAllApplications,
-  getApplicationsByGPA,
-  removeAllApplications,
+  addFavourite,
+  getAllFavourites,
   close
 };

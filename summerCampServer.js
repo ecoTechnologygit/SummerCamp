@@ -2,6 +2,7 @@ const readline = require('readline');
 const express = require('express');
 const path = require("path");
 const mongoClient = require('./MongoClient');
+const { MongoClient } = require('mongodb');
 const routes = require('./routes');
 
 const rl = readline.createInterface({
@@ -20,7 +21,16 @@ app.use(express.json());
 
 app.use(routes);
 
-mongoClient.connect()
+(async () => {
+  try {
+    const uri = process.env.MONGO_CONNECTION_STRING;
+    const client = new MongoClient(uri);
+    await client.connect();
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
+})();
 
 
 app.get("/", (request, response) => {
