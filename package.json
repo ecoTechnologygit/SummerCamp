@@ -1,9 +1,10 @@
 {
   "name": "summercamp",
   "version": "1.0.0",
-  "main": "summerCampServer.js",
+  "main": "FavoriteRestaurants.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node FavoriteRestaurants.js"
   },
   "author": "",
   "license": "ISC",
