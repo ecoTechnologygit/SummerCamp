@@ -2,6 +2,7 @@ const readline = require('readline');
 const express = require('express');
 const path = require("path");
 const mongoClient = require('./MongoClient');
+const routes = require('./routes');
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -17,6 +18,7 @@ app.set("views", path.resolve(__dirname, "templates"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(routes);
 
 mongoClient.connect()
 
